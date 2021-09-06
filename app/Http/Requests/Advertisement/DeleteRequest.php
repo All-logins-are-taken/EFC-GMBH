@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Advertisement;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-class DestroyRequest extends FormRequest
+class DeleteRequest extends FormRequest
 {
-    public function authorize(Request $request): bool
+    public function authorize(): bool
     {
         return true;
     }

@@ -1,5 +1,9 @@
 <?php
 
+use App\Repository\AdvertisementRepository;
+use App\Services\AuthorizationService;
+use App\Services\QueryDataService;
+
 return [
 
     /*
@@ -228,8 +232,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'queryService' => App\Services\QueryDataService::class,
-        'AdvertisementRepository' => App\Repository\AdvertisementRepository::class,
+        'QueryService' => QueryDataService::class,
+        'AuthorizationService' => AuthorizationService::class,
+        'AdvertisementRepository' => AdvertisementRepository::class,
     ],
 
 ];

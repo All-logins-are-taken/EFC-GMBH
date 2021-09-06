@@ -18,6 +18,6 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
 
     public function getById($id): mixed
     {
-        return Advertisement::where('id', $id)->get();
+        return Advertisement::find($id);
     }
 }

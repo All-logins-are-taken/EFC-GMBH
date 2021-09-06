@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Advertisement\CreateRequest;
-use App\Http\Requests\Advertisement\DestroyRequest;
+use App\Http\Requests\Advertisement\DeleteRequest;
 use App\Http\Requests\Advertisement\UpdateRequest;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Repository\AdvertisementRepository;
+use App\Services\AuthorizationService;
 use App\Services\QueryDataService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -24,8 +26,12 @@ class AdvertisementController extends Controller
         return inertia('Advertisement/List', ['advertisements' => $repository->all($request)]);
     }
 
-    public function create(): Response
+    public function create(AuthorizationService $authorizationService): Response
     {
+        $authorizationService->isUserAuthorized(__METHOD__);
+
+        Session::flash('Current logged in user is allowed to create new posts.');
+
         return inertia('Advertisement/Create');
     }
 
@@ -48,8 +54,14 @@ class AdvertisementController extends Controller
     public function edit(
         Request $request,
         QueryDataService $queryService,
-        AdvertisementRepository $repository
-    ): Response|ResponseFactory {
+        AdvertisementRepository $repository,
+        AuthorizationService $authorizationService
+    ): Response|ResponseFactory
+    {
+        $authorizationService->isUserAuthorized(__METHOD__);
+
+        Session::flash('Current logged in user is allowed to create new posts.');
+
         $queryData = $queryService->requestData($request);
 
         $advertisement = $repository->getById($request->id);
@@ -71,8 +83,10 @@ class AdvertisementController extends Controller
         );
     }
 
-    public function destroy(DestroyRequest $request, AdvertisementRepository $repository): RedirectResponse
+    public function destroy(DeleteRequest $request, AdvertisementRepository $repository, AuthorizationService $authorizationService): RedirectResponse
     {
+        $authorizationService->isUserAuthorized(__METHOD__);
+
         $advertisement = $repository->getById($request->id);
         $advertisement->delete();
 

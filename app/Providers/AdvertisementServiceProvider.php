@@ -2,13 +2,21 @@
 
 namespace App\Providers;
 
+use App\Models\Advertisement;
+use App\Policies\AdvertisementPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AdvertisementServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        'App\Model' => 'App\Policies\ModelPolicy',
+        Advertisement::class => AdvertisementPolicy::class
+    ];
+
+
     public function register(): void
     {
         //
@@ -16,6 +24,7 @@ class AdvertisementServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->registerPolicies();
         $this->configureRateLimiting();
     }
 
