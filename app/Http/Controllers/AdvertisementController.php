@@ -21,7 +21,7 @@ class AdvertisementController extends Controller
 {
     public function index(Request $request, AdvertisementRepository $repository): Response|ResponseFactory
     {
-        return inertia('Advertisement/List', ['advertisements' => $repository->getById($request)]);
+        return inertia('Advertisement/List', ['advertisements' => $repository->all($request)]);
     }
 
     public function create(): Response

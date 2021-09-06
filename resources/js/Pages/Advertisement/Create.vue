@@ -103,8 +103,6 @@
                 }, function (error) {
                     return error;
                 });
-
-                //this.form.get(this.route('advertisement'), {})
             },
         }
     }

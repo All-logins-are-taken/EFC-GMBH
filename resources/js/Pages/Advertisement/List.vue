@@ -46,8 +46,8 @@
                         <td>{{ item.title }}</td>
                         <td>{{ item.description }}</td>
                         <td>
-                            <div v-if="!item.images || !item.images.length">No advertisement image found</div>
-                            <div v-if="item.images && item.images.length">
+                            <div v-if="!item.images">No advertisement image found</div>
+                            <div v-if="item.images">
                                 <div v-for="image in item.images"  :key="image.id" class="images ml-4">
                                     <img width="50" :src=image.url+image.image_path :alt=image.image_name>
                                 </div>

@@ -1220,9 +1220,6 @@ select {
 .mb-12 {
 	margin-bottom: 3rem;
 }
-.mb-20 {
-	margin-bottom: 5rem;
-}
 .block {
 	display: block;
 }
@@ -1564,10 +1561,6 @@ select {
 .bg-blue-700 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
-}
-.bg-blue-100 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(219, 234, 254, var(--tw-bg-opacity));
 }
 .bg-red-400 {
 	--tw-bg-opacity: 1;
