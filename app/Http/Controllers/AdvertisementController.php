@@ -26,17 +26,15 @@ class AdvertisementController extends Controller
         return inertia('Advertisement/List', ['advertisements' => $repository->all($request)]);
     }
 
-    public function create(AuthorizationService $authorizationService): Response
+    public function create(): Response
     {
-        $authorizationService->isUserAuthorized(__METHOD__);
-
-        Session::flash('Current logged in user is allowed to create new posts.');
-
         return inertia('Advertisement/Create');
     }
 
-    public function store(CreateRequest $request): void
+    public function store(CreateRequest $request, AuthorizationService $authorizationService): void
     {
+        $authorizationService->isUserAuthorized(__METHOD__);
+
         $advertisement = $request->user()->advertisements()->create(
             $request->validated()
         );
@@ -54,14 +52,9 @@ class AdvertisementController extends Controller
     public function edit(
         Request $request,
         QueryDataService $queryService,
-        AdvertisementRepository $repository,
-        AuthorizationService $authorizationService
+        AdvertisementRepository $repository
     ): Response|ResponseFactory
     {
-        $authorizationService->isUserAuthorized(__METHOD__);
-
-        Session::flash('Current logged in user is allowed to create new posts.');
-
         $queryData = $queryService->requestData($request);
 
         $advertisement = $repository->getById($request->id);
@@ -69,8 +62,10 @@ class AdvertisementController extends Controller
         return inertia('Advertisement/Edit', ['advertisement' => $advertisement, 'queryData' => $queryData]);
     }
 
-    public function update(UpdateRequest $request, AdvertisementRepository $repository): RedirectResponse
+    public function update(UpdateRequest $request, AdvertisementRepository $repository, AuthorizationService $authorizationService): RedirectResponse
     {
+        $authorizationService->isUserAuthorized(__METHOD__);
+
         $validated = $request->validated();
 
         $advertisement = $repository->getById($request->id);
